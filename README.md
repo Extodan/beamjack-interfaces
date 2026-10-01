@@ -59,6 +59,24 @@ npm run verify       # compile + measure + assert every interface
 npm run verify:check # …and diff against the baseline; non-zero on regression
 ```
 
+## Known limitation: the consumer's mate gate checks within a feature, not across a size family
+
+`src/index.ts` exposes `mateGate`, the seam the Beamjack engine calls on
+finished parts. Its honest scope, stated plainly: **it compares an asm
+diameter against each feature's single nominal — it cannot see across sizes
+within a family.** A 2.4 mm socket is explainable as M2-clearance
+(`2.0 + 0.35`) or M2.5-snug (`2.5 − 0.05`); today's schema carries one
+`nominal_ref` per feature, so the gate returns CLEAN where a cross-size
+ambiguity exists. Those are false CLEANs, live in the current release — not
+a hypothetical.
+
+Why not fixed yet: whether the fit bands actually overlap in practice is
+exactly what the gauge-print data will measure. Designing a family-shaped
+`nominal_ref` before the real offsets are known would be a schema migration
+done twice. When the measured `delta(d)` lands, the schema grows size
+families and the gate reports cross-size ambiguity explicitly instead of
+picking a winner.
+
 ## Licensing
 
 Code: **MIT**. Dimension data (`spec.json` nominals): **CC0** — dimensions are facts. Every interface records its dimensional source and that source's licence in [SOURCES.md](SOURCES.md); implementations are written from scratch against published dimensions. Trademarks are used nominatively ("compatible with the 42 mm Gridfinity grid"); no endorsement is implied.

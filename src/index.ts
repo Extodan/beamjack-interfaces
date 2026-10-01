@@ -129,6 +129,11 @@ export function fittedNominal(spec: InterfaceSpec, feature: MatingFeature, cls?:
  * Mate gate: assert a measured socket/peg dimension matches the registry
  * nominal within the declared fit class. Returns a verdict, never throws —
  * the caller decides how loudly to fail.
+ *
+ * SCOPE (stated, not implied): checks within a feature's single nominal —
+ * NOT across sizes in a family. 2.4 mm is M2-clearance or M2.5-snug and
+ * this returns CLEAN; those false CLEANs are live. See README "Known
+ * limitation" before relying on a clean verdict for sub-M3 diameters.
  */
 export function mateGate(
   id: string,
