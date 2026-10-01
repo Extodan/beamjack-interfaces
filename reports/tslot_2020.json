@@ -1,0 +1,62 @@
+{
+ "id": "tslot_2020",
+ "version": "0.1.0",
+ "compiled": true,
+ "measured_by": "python3+trimesh",
+ "assertions": [
+  {
+   "name": "fixture bbox",
+   "type": "bbox",
+   "expect": {
+    "x": 60,
+    "y": 40,
+    "z": 11.2
+   },
+   "tol": 0.3,
+   "pass": true,
+   "available": true,
+   "measured": {
+    "x": 60,
+    "y": 40,
+    "z": 11.2
+   },
+   "reason": ""
+  },
+  {
+   "name": "bracket hole pitch is 20 mm",
+   "type": "hole_spacing",
+   "expect": 20,
+   "tol": 0.2,
+   "pass": true,
+   "available": true,
+   "measured": [
+    20.0012,
+    0.0159,
+    19.9829
+   ],
+   "reason": ""
+  },
+  {
+   "name": "mid-plane section area",
+   "type": "section_area",
+   "expect": 2316,
+   "tol": 45,
+   "pass": true,
+   "available": true,
+   "measured": 2316.54,
+   "reason": ""
+  },
+  {
+   "name": "plate volume sanity",
+   "type": "volume",
+   "expect": 18750,
+   "tol": 500,
+   "pass": true,
+   "available": true,
+   "measured": 18939.78,
+   "reason": ""
+  }
+ ],
+ "ok": true,
+ "unavailable": 0
+}

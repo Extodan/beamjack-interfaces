@@ -1,0 +1,60 @@
+{
+ "id": "bearing_iso15",
+ "version": "0.1.0",
+ "compiled": true,
+ "measured_by": "python3+trimesh",
+ "assertions": [
+  {
+   "name": "fixture bbox",
+   "type": "bbox",
+   "expect": {
+    "x": 120,
+    "y": 40,
+    "z": 10
+   },
+   "tol": 0.3,
+   "pass": true,
+   "available": true,
+   "measured": {
+    "x": 120,
+    "y": 40,
+    "z": 10
+   },
+   "reason": ""
+  },
+  {
+   "name": "seat spacing on mid-plane is 60 mm",
+   "type": "hole_spacing",
+   "expect": 60,
+   "tol": 0.2,
+   "pass": true,
+   "available": true,
+   "measured": [
+    59.8871
+   ],
+   "reason": ""
+  },
+  {
+   "name": "mid-plane section area (two seat bores cut)",
+   "type": "section_area",
+   "expect": 3562,
+   "tol": 80,
+   "pass": true,
+   "available": true,
+   "measured": 3559.05,
+   "reason": ""
+  },
+  {
+   "name": "block volume sanity",
+   "type": "volume",
+   "expect": 35900,
+   "tol": 900,
+   "pass": true,
+   "available": true,
+   "measured": 36176.7,
+   "reason": ""
+  }
+ ],
+ "ok": true,
+ "unavailable": 0
+}

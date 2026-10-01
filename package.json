@@ -1,0 +1,28 @@
+{
+  "name": "@beamjack/interfaces",
+  "version": "0.1.0",
+  "description": "Parametric mating interface definitions for 3D-printed parts — compiled, measured, assertion-tested OpenSCAD modules with fit classes and provenance.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beamjack/interfaces"
+  },
+  "files": [
+    "lib",
+    "interfaces",
+    "src",
+    "schema"
+  ],
+  "main": "src/index.ts",
+  "scripts": {
+    "gen": "node scripts/gen-consts.mjs",
+    "gen:check": "node scripts/gen-consts.mjs --check",
+    "verify": "node scripts/verify.mjs",
+    "verify:check": "node scripts/verify.mjs --check"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20"
+  }
+}

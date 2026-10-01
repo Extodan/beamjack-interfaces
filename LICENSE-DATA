@@ -1,0 +1,6 @@
+The dimension data in every interfaces/<id>/spec.json ("nominals") is released
+under CC0 1.0 Universal (public domain dedication).
+
+Dimensional measurements are facts and are not ownable; stating CC0 removes
+any residual doubt about reuse. The OpenSCAD and TypeScript IMPLEMENTATIONS
+in this repository are MIT (see LICENSE).

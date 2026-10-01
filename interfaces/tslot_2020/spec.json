@@ -1,0 +1,114 @@
+{
+  "id": "tslot_2020",
+  "title": "2020/2040 T-slot extrusion features",
+  "version": "0.1.0",
+  "summary": "V-slot 2020/2040 profile features: sliding T-nuts, end-face bolts, corner-bracket faces.",
+  "mates_with": [
+    "2020 V-slot extrusion",
+    "2040 V-slot extrusion",
+    "M4/M5 T-nuts and bolts",
+    "2020 corner brackets"
+  ],
+  "source": {
+    "name": "OpenBuilds V-Slot linear guide published dimensions",
+    "url": "https://docs.openbuilds.com/",
+    "licence": "OpenBuilds publishes V-Slot dimensional drawings openly; V-slot is an open profile cut by many vendors. Dimensions are facts; implementation is original.",
+    "notes": "Numbers target the common 6.0 mm-gap V-slot variant. B-slot (European T-slot, 5.0/6.0 mm) differs \u2014 do not mix."
+  },
+  "units": "mm",
+  "nominals": {
+    "profile": {
+      "size": 20.0,
+      "slot_gap": 6.0,
+      "slot_depth": 6.0,
+      "bore_d": 4.2,
+      "size_2040": 40.0
+    },
+    "tnut": {
+      "body_w": 5.8,
+      "body_t": 3.2,
+      "stem_thread": 5.0,
+      "length": 12.0
+    },
+    "bracket": {
+      "hole_pitch": 20,
+      "hole_d": 5,
+      "thickness": 3.0,
+      "leg": 20.0
+    }
+  },
+  "features": [
+    {
+      "name": "tnut_body",
+      "kind": "peg",
+      "nominal_ref": "tnut.body_w",
+      "fit_class_default": "clearance",
+      "direction": "normal"
+    },
+    {
+      "name": "tnut_stem",
+      "kind": "hole",
+      "nominal_ref": "tnut.stem_thread",
+      "fit_class_default": "clearance",
+      "direction": "+z"
+    },
+    {
+      "name": "end_bolt_hole",
+      "kind": "hole",
+      "nominal_ref": "profile.bore_d",
+      "fit_class_default": "location",
+      "direction": "+z"
+    },
+    {
+      "name": "bracket_face",
+      "kind": "face",
+      "nominal_ref": "bracket.hole_pitch",
+      "fit_class_default": "location",
+      "direction": "normal"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "fixture bbox",
+      "type": "bbox",
+      "fixture": "test_plate",
+      "expect": {
+        "x": 60,
+        "y": 40,
+        "z": 11.2
+      },
+      "tol": 0.3
+    },
+    {
+      "name": "bracket hole pitch is 20 mm",
+      "type": "hole_spacing",
+      "fixture": "test_plate",
+      "plane": {
+        "axis": "z",
+        "at": 1.5
+      },
+      "measure_axis": "x",
+      "expect": 20,
+      "tol": 0.2
+    },
+    {
+      "name": "mid-plane section area",
+      "type": "section_area",
+      "fixture": "test_plate",
+      "plane": {
+        "axis": "z",
+        "at": 1.5
+      },
+      "expect": 2316,
+      "tol": 45
+    },
+    {
+      "name": "plate volume sanity",
+      "type": "volume",
+      "fixture": "test_plate",
+      "expect": 18750,
+      "tol": 500
+    }
+  ],
+  "print_notes": "T-nut gauges print flat-side-down, no supports. Slot features are orientation-sensitive: the 6.0 mm gap needs a calibrated printer \u2014 if the gauge T-nut binds, add 0.1 mm to the gap fit before touching anything else."
+}

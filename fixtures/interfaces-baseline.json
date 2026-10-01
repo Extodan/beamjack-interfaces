@@ -1,0 +1,68 @@
+{
+ "iso_metric_fasteners": {
+  "version": "0.1.0",
+  "ok": true,
+  "assertions": {
+   "fixture bbox": {
+    "pass": true,
+    "available": true
+   },
+   "M3/M4/M4 hole spacing on mid-plane is 15 mm pitch": {
+    "pass": true,
+    "available": true
+   },
+   "mid-plane section area": {
+    "pass": true,
+    "available": true
+   },
+   "plate volume sanity (holes actually cut)": {
+    "pass": true,
+    "available": true
+   }
+  }
+ },
+ "tslot_2020": {
+  "version": "0.1.0",
+  "ok": true,
+  "assertions": {
+   "fixture bbox": {
+    "pass": true,
+    "available": true
+   },
+   "bracket hole pitch is 20 mm": {
+    "pass": true,
+    "available": true
+   },
+   "mid-plane section area": {
+    "pass": true,
+    "available": true
+   },
+   "plate volume sanity": {
+    "pass": true,
+    "available": true
+   }
+  }
+ },
+ "bearing_iso15": {
+  "version": "0.1.0",
+  "ok": true,
+  "assertions": {
+   "fixture bbox": {
+    "pass": true,
+    "available": true
+   },
+   "seat spacing on mid-plane is 60 mm": {
+    "pass": true,
+    "available": true
+   },
+   "mid-plane section area (two seat bores cut)": {
+    "pass": true,
+    "available": true
+   },
+   "block volume sanity": {
+    "pass": true,
+    "available": true
+   }
+  }
+ }
+}

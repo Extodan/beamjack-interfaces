@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://beamjack.app/schema/interface.schema.json",
+  "title": "Beamjack interface definition",
+  "description": "One spec.json per interface. The single source of truth for every number; the .scad constants are generated from it.",
+  "type": "object",
+  "required": ["id", "title", "version", "summary", "mates_with", "source", "units", "nominals", "features", "assertions", "print_notes"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "snake_case, matches the folder name"
+    },
+    "title": { "type": "string", "description": "human name; no third-party trademarks used possessively" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "summary": { "type": "string" },
+    "mates_with": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "source": {
+      "type": "object",
+      "required": ["name", "licence"],
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "licence": { "type": "string", "description": "licence of the SOURCE document, not of this implementation" },
+        "notes": { "type": "string" }
+      }
+    },
+    "units": { "const": "mm" },
+    "nominals": {
+      "type": "object",
+      "description": "named dimensional facts; nesting allowed one level, leaves must be numbers",
+      "additionalProperties": { "$ref": "#/$defs/numberTree" }
+    },
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "nominal_ref", "fit_class_default", "direction"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "enum": ["peg", "socket", "hole", "profile", "face"] },
+          "nominal_ref": { "type": "string", "description": "dotted path into nominals" },
+          "fit_class_default": { "enum": ["clearance", "location", "snug"] },
+          "direction": { "enum": ["+z", "-z", "radial", "normal"] }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "description": "machine-checkable claims against compiled geometry; every entry must pass or report available:false with a reason",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "expect", "tol"],
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "enum": ["bbox", "hole_spacing", "volume", "section_area", "clearance"] },
+          "expect": { "type": ["number", "object"] },
+          "tol": { "type": "number", "minimum": 0 },
+          "fixture": { "type": "string", "description": "which named fixture in test.scad this claim targets" },
+          "plane": {
+            "type": "object",
+            "properties": {
+              "axis": { "enum": ["x", "y", "z"] },
+              "at": { "type": "number" }
+            }
+          },
+          "measure_axis": { "enum": ["x", "y", "z"], "description": "for hole_spacing: the axis hole centres are projected onto" }
+        }
+      }
+    },
+    "print_notes": { "type": "string" }
+  },
+  "$defs": {
+    "numberTree": {
+      "oneOf": [
+        { "type": "number" },
+        {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/numberTree" }
+        }
+      ]
+    }
+  }
+}

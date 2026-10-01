@@ -1,0 +1,64 @@
+# @beamjack/interfaces
+
+Parametric mating interface definitions for 3D-printed parts — **compiled, measured, assertion-tested** OpenSCAD modules with fit classes and recorded provenance.
+
+Gridfinity, VESA, DIN rail, T-slot, SBC patterns, bearing seats, fastener features: each entry is an importable module whose mating features are typed pegs and sockets cut from a shared nominal, with fit classes and verified dimensions.
+
+> Every dimension in this library is **verified against compiled geometry, not asserted** — `scripts/verify.mjs` compiles each interface's fixture with OpenSCAD, measures the result with trimesh, and evaluates every claim in its `spec.json`. Reports land in `reports/`. An assertion that cannot run reports `available: false` with a reason; nothing passes silently.
+
+## Use
+
+```scad
+use <lib/asm.scad>;                    // asm_peg / asm_socket / counterbores / nut traps
+include <interfaces/tslot_2020/tslot_2020.consts.scad>;
+use <interfaces/tslot_2020/tslot_2020.scad>;
+
+difference() {
+    my_mounting_ear();
+    translate([10, 10, 0]) tslot_bracket_face();   // M5 holes on the 20 mm grid
+}
+```
+
+Or from TypeScript:
+
+```ts
+import { byId, featuresByKind, fitTolerance } from "@beamjack/interfaces";
+const tslot = byId("tslot_2020");                 // typed spec, straight from spec.json
+const sockets = featuresByKind("socket");         // every socket feature across the library
+fitTolerance("clearance");                        // 0.35 mm diametral (provisional — see gauges)
+```
+
+## Fit classes
+
+Every mating feature derives its clearance from one table in `lib/fits.scad`:
+
+| class | behaviour | diametral delta |
+|---|---|---|
+| `clearance` | slides freely | +0.35 mm |
+| `location` | assembles by hand, no slop | +0.15 mm |
+| `snug` | press fit, needs force | −0.05 mm |
+
+**These are starting hypotheses, not measurements.** Each interface ships a printable `gauge.scad` carrying its mating feature in all three classes; print them, record which class actually fits your printer, and correct the table. Until those prints happen, treat every fit as provisional.
+
+## Repository layout
+
+```
+lib/            fits.scad (tolerance table) · asm.scad (typed features, mirrors the Beamjack engine)
+interfaces/     <id>/{spec.json, <id>.scad, <id>.consts.scad (generated), test.scad, gauge.scad, README}
+schema/         JSON Schema for spec.json
+scripts/        gen-consts.mjs (spec → consts) · verify.mjs (compile + measure + assert) · measure.py
+fixtures/       interfaces-baseline.json — the regression baseline
+reports/        machine-readable verification output
+```
+
+## Development
+
+```sh
+npm run gen          # spec.json → *.consts.scad (CI fails if stale)
+npm run verify       # compile + measure + assert every interface
+npm run verify:check # …and diff against the baseline; non-zero on regression
+```
+
+## Licensing
+
+Code: **MIT**. Dimension data (`spec.json` nominals): **CC0** — dimensions are facts. Every interface records its dimensional source and that source's licence in [SOURCES.md](SOURCES.md); implementations are written from scratch against published dimensions. Trademarks are used nominatively ("compatible with the 42 mm Gridfinity grid"); no endorsement is implied.

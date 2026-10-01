@@ -1,0 +1,61 @@
+{
+  "id": "bearing_iso15",
+  "title": "ISO 15 deep-groove ball bearing seats",
+  "version": "0.1.0",
+  "summary": "Press and clearance seats, shoulders and retaining lips for 608, 625, 6001 and 6002 radial bearings.",
+  "mates_with": ["608", "608-2RS", "625", "6001", "6002 deep-groove ball bearings"],
+  "source": {
+    "name": "ISO 15 (radial bearings — boundary dimensions)",
+    "url": "https://www.iso.org/standard.html",
+    "licence": "Standard document copyrighted; boundary dimensions used here are published facts from the standard's public dimension tables. Implementation is original.",
+    "notes": "608-2RS shares the 608 boundary (8x22x7) with contact seals — one entry serves both."
+  },
+  "units": "mm",
+  "nominals": {
+    "b608":  { "bore": 8.0,  "od": 22.0, "width": 7.0 },
+    "b625":  { "bore": 5.0,  "od": 16.0, "width": 5.0 },
+    "b6001": { "bore": 12.0, "od": 28.0, "width": 8.0 },
+    "b6002": { "bore": 15.0, "od": 32.0, "width": 9.0 },
+    "seat":  { "min_wall": 2.0, "lip": 1.2, "shoulder_clearance": 0.5 }
+  },
+  "features": [
+    { "name": "press_seat",      "kind": "socket", "nominal_ref": "b608.od",   "fit_class_default": "snug",      "direction": "radial" },
+    { "name": "clearance_seat",  "kind": "socket", "nominal_ref": "b608.od",   "fit_class_default": "clearance", "direction": "radial" },
+    { "name": "retaining_lip",   "kind": "peg",    "nominal_ref": "seat.lip",  "fit_class_default": "location",  "direction": "normal" },
+    { "name": "shaft_seat",      "kind": "hole",   "nominal_ref": "b608.bore", "fit_class_default": "location",  "direction": "radial" }
+  ],
+  "assertions": [
+    {
+      "name": "fixture bbox",
+      "type": "bbox",
+      "fixture": "test_block",
+      "expect": { "x": 120, "y": 40, "z": 10 },
+      "tol": 0.3
+    },
+    {
+      "name": "seat spacing on mid-plane is 60 mm",
+      "type": "hole_spacing",
+      "fixture": "test_block",
+      "plane": { "axis": "z", "at": 4 },
+      "measure_axis": "x",
+      "expect": 60,
+      "tol": 0.2
+    },
+    {
+      "name": "mid-plane section area (two seat bores cut)",
+      "type": "section_area",
+      "fixture": "test_block",
+      "plane": { "axis": "z", "at": 4 },
+      "expect": 3562,
+      "tol": 80
+    },
+    {
+      "name": "block volume sanity",
+      "type": "volume",
+      "fixture": "test_block",
+      "expect": 35900,
+      "tol": 900
+    }
+  ],
+  "print_notes": "Print seats with the bearing axis vertical, bore up, 0.2 mm layers, 4 walls. A snug press seat may need 0.05–0.1 mm added for printers that squish; verify with the gauge plate before committing a housing."
+}

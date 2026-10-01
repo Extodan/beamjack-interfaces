@@ -1,0 +1,61 @@
+{
+ "id": "iso_metric_fasteners",
+ "version": "0.1.0",
+ "compiled": true,
+ "measured_by": "python3+trimesh",
+ "assertions": [
+  {
+   "name": "fixture bbox",
+   "type": "bbox",
+   "expect": {
+    "x": 90,
+    "y": 30,
+    "z": 16.9
+   },
+   "tol": 0.3,
+   "pass": true,
+   "available": true,
+   "measured": {
+    "x": 90,
+    "y": 30,
+    "z": 16.9
+   },
+   "reason": ""
+  },
+  {
+   "name": "M3/M4/M4 hole spacing on mid-plane is 15 mm pitch",
+   "type": "hole_spacing",
+   "expect": 15,
+   "tol": 0.15,
+   "pass": true,
+   "available": true,
+   "measured": [
+    15.0151,
+    14.9934
+   ],
+   "reason": ""
+  },
+  {
+   "name": "mid-plane section area",
+   "type": "section_area",
+   "expect": 2659,
+   "tol": 25,
+   "pass": true,
+   "available": true,
+   "measured": 2665.38,
+   "reason": ""
+  },
+  {
+   "name": "plate volume sanity (holes actually cut)",
+   "type": "volume",
+   "expect": 21450,
+   "tol": 400,
+   "pass": true,
+   "available": true,
+   "measured": 21463.08,
+   "reason": ""
+  }
+ ],
+ "ok": true,
+ "unavailable": 0
+}

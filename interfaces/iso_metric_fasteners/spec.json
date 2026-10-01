@@ -1,0 +1,64 @@
+{
+  "id": "iso_metric_fasteners",
+  "title": "ISO metric fastener features",
+  "version": "0.1.0",
+  "summary": "Through holes, cap/button-head counterbores, hex and square nut traps, and heat-set insert bosses for M2–M6.",
+  "mates_with": ["M2", "M2.5", "M3", "M4", "M5", "M6 metric screws and nuts", "M3–M6 brass heat-set inserts"],
+  "source": {
+    "name": "ISO 273 (clearance holes), ISO 4762 (socket head cap), ISO 7380-1 (button head), ISO 4032 (hex nuts), DIN 562 (square nuts)",
+    "url": "https://www.iso.org/standards.html",
+    "licence": "Standard documents are copyrighted; the dimensional values used here are published facts (sizes, fits, head envelopes) summarised from the standards' public tables. No standard text is reproduced. Implementations in this repo are original.",
+    "notes": "Heat-set insert bosses use vendor-consensus dimensions for common brass inserts (McMaster-style M3x5 family); see SOURCES.md."
+  },
+  "units": "mm",
+  "nominals": {
+    "m2":   { "thread": 2.0, "hole_clear": 2.4, "cap_d": 3.8,  "cap_k": 2.0,  "btn_d": 3.8,  "btn_k": 1.3,  "nut_af": 4.0,  "nut_m": 1.6, "sq_af": 4.0,  "sq_m": 1.2, "insert_od": 3.2, "insert_len": 3.0 },
+    "m2_5": { "thread": 2.5, "hole_clear": 2.9, "cap_d": 4.5,  "cap_k": 2.5,  "btn_d": 4.6,  "btn_k": 1.5,  "nut_af": 5.0,  "nut_m": 2.0, "sq_af": 5.0,  "sq_m": 1.6, "insert_od": 3.6, "insert_len": 3.5 },
+    "m3":   { "thread": 3.0, "hole_clear": 3.4, "cap_d": 5.5,  "cap_k": 3.0,  "btn_d": 5.7,  "btn_k": 1.65, "nut_af": 5.5,  "nut_m": 2.4, "sq_af": 5.5,  "sq_m": 1.8, "insert_od": 4.6, "insert_len": 5.0 },
+    "m4":   { "thread": 4.0, "hole_clear": 4.5, "cap_d": 7.0,  "cap_k": 4.0,  "btn_d": 7.6,  "btn_k": 2.2,  "nut_af": 7.0,  "nut_m": 3.2, "sq_af": 7.0,  "sq_m": 2.2, "insert_od": 6.0, "insert_len": 6.5 },
+    "m5":   { "thread": 5.0, "hole_clear": 5.5, "cap_d": 8.5,  "cap_k": 5.0,  "btn_d": 8.8,  "btn_k": 2.5,  "nut_af": 8.0,  "nut_m": 4.7, "sq_af": 8.0,  "sq_m": 2.7, "insert_od": 7.0, "insert_len": 7.5 },
+    "m6":   { "thread": 6.0, "hole_clear": 6.6, "cap_d": 10.0, "cap_k": 6.0,  "btn_d": 10.5, "btn_k": 3.0,  "nut_af": 10.0, "nut_m": 5.2, "sq_af": 10.0, "sq_m": 3.2, "insert_od": 8.0, "insert_len": 9.0 }
+  },
+  "features": [
+    { "name": "through_hole",        "kind": "hole",   "nominal_ref": "m3.thread",      "fit_class_default": "clearance", "direction": "+z" },
+    { "name": "cap_counterbore",     "kind": "socket", "nominal_ref": "m3.cap_d",       "fit_class_default": "clearance", "direction": "-z" },
+    { "name": "button_counterbore",  "kind": "socket", "nominal_ref": "m4.btn_d",       "fit_class_default": "clearance", "direction": "-z" },
+    { "name": "hex_nut_trap",        "kind": "socket", "nominal_ref": "m3.nut_af",      "fit_class_default": "location",  "direction": "-z" },
+    { "name": "square_nut_trap",     "kind": "socket", "nominal_ref": "m4.sq_af",       "fit_class_default": "location",  "direction": "-z" },
+    { "name": "insert_boss",         "kind": "peg",    "nominal_ref": "m4.insert_od",   "fit_class_default": "snug",      "direction": "+z" }
+  ],
+  "assertions": [
+    {
+      "name": "fixture bbox",
+      "type": "bbox",
+      "fixture": "test_plate",
+      "expect": { "x": 90, "y": 30, "z": 16.9 },
+      "tol": 0.3
+    },
+    {
+      "name": "M3/M4/M4 hole spacing on mid-plane is 15 mm pitch",
+      "type": "hole_spacing",
+      "fixture": "test_plate",
+      "plane": { "axis": "z", "at": 4 },
+      "measure_axis": "x",
+      "expect": 15,
+      "tol": 0.15
+    },
+    {
+      "name": "mid-plane section area",
+      "type": "section_area",
+      "fixture": "test_plate",
+      "plane": { "axis": "z", "at": 4 },
+      "expect": 2659,
+      "tol": 25
+    },
+    {
+      "name": "plate volume sanity (holes actually cut)",
+      "type": "volume",
+      "fixture": "test_plate",
+      "expect": 21450,
+      "tol": 400
+    }
+  ],
+  "print_notes": "Print the gauge plates flat (features up), 0.2 mm layers, 3 walls, no supports. Nut traps print upright; heat-set bosses need 3+ perimeter walls around the insert bore."
+}
