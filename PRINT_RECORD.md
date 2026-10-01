@@ -27,10 +27,17 @@ the embossing).
 - Bores ≥16 mm: calipers are fine; take the mean of two perpendicular axes.
 - Fit judgment per class, per size: **free** (slides) / **hand** (assembles,
   no slop) / **force** (press) / **won't** (binds or impossible).
+- **WHERE it binds, always**: `entry` (first layer only) or `through`
+  (full depth). These are different diseases with different fixes —
+  entry-only is elephant's foot (fix: entry chamfer or squish), through-depth
+  is a diametral offset (fix: the fit table). Pin gauges give the minimum
+  bore, which is the right number for fit; note whether the pin stops at
+  the mouth or runs tight all the way. Folding an entry artifact into a
+  diameter term makes delta(d) wrong on every part thicker than one layer.
 
 ## Plate A — iso_metric_fasteners (nominal = thread Ø)
 
-| size | class | hole Ø (design) | measured Ø | judgment | note |
+| size | class | hole Ø (design) | measured Ø | judgment | binds | note |
 |---|---|---|---|---|---|
 | M2 | clearance | 2.35 | | | |
 | M2 | location | 2.15 | | | |
@@ -53,7 +60,7 @@ the embossing).
 
 ## Plate B — bearing_iso15 (nominal = bearing OD)
 
-| bearing | class | bore Ø (design) | measured Ø | judgment | note |
+| bearing | class | bore Ø (design) | measured Ø | judgment | binds | note |
 |---|---|---|---|---|---|
 | 625 (16) | clearance | 16.35 | | | |
 | 625 (16) | location | 16.15 | | | |

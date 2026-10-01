@@ -17,6 +17,11 @@ import { fileURLToPath } from "node:url";
 // NOTE: no path.dirname here — the '../' URL keeps a trailing slash and
 // dirname would strip the last real component, resolving root one level high
 const root = fileURLToPath(new URL("../", import.meta.url));
+// unknown flags are a hard error — never fall through to a different mode
+const USAGE = "usage: node scripts/verify.mjs [--check]";
+for (const a of process.argv.slice(2)) {
+  if (a !== "--check") { console.error(`unknown argument "${a}"\n${USAGE}`); process.exit(2); }
+}
 const check = process.argv.includes("--check");
 const OPENSCAD = process.env.OPENSCAD_BIN || "openscad";
 const reports = path.join(root, "reports");
