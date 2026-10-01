@@ -15,6 +15,8 @@ include <fits.scad>;
 // ---- peg ↔ socket ----------------------------------------------------------
 // MALE peg, base at origin, growing +Z, chamfered self-centring tip.
 module asm_peg(d, len) {
+    // mating event for the census (see lib/fits.scad owners' guide in README)
+    echo(str("ASM|peg|nominal=", d, "|cls=none|fitted=", d));
     lead = fit_lead(d);
     union() {
         cylinder(h = max(0.01, len - lead), d = d);
@@ -26,6 +28,7 @@ module asm_peg(d, len) {
 // FEMALE socket, cut from the SAME nominal as its peg. Bore grows with the
 // fit class; mouth chamfer eases insertion.
 module asm_socket(d, depth, cls = "location") {
+    echo(str("ASM|socket|nominal=", d, "|cls=", cls, "|fitted=", fit_d(d, cls)));
     bore = fit_d(d, cls);
     lead = fit_lead(bore);
     union() {
