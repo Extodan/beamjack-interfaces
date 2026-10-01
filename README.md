@@ -2,7 +2,9 @@
 
 Parametric mating interface definitions for 3D-printed parts — **compiled, measured, assertion-tested** OpenSCAD modules with fit classes and recorded provenance.
 
-**What this library is actually for.** Modern LLMs already recall the common dimension tables — 2020 extrusion and 608 bearings are among the most-documented numbers in the hobby, and a bare datum is worth approximately nothing. The value here is the two things a model *cannot* do: apply a **measured, printer-specific fit offset** (`asm_socket(d, …, cls)` is where a 4.2 mm nominal becomes a hole that actually passes an M4 bolt on YOUR machine), and be **right about interfaces too obscure to be in training data**. Every claim is verified against compiled geometry, not asserted. The offset table is currently provisional pending gauge prints — the mechanism ships now, the measured numbers land with them.
+**What this library is today — all provable without a printer:** mating features as typed pegs-and-sockets cut from one shared nominal; every dimension **verified against compiled geometry, not asserted** (`scripts/verify.mjs` compiles, measures, and diffs against a regression baseline); provenance per interface; part-attributed build census. A model-recall audit shows LLMs already reproduce the famous dimension tables at 83–100% — lookup alone is worth little, here or anywhere.
+
+**The intended payoff — a measured, printer-specific fit offset** (`asm_socket(d, …, cls)` turning a 4.2 mm nominal into a bore that passes an M4 on *your* machine) — is designed and instrumented but **not yet measured**: the tolerance table is provisional, the gauge plates exist as files, and the mechanism's first physical test is pending those prints. This paragraph moves to the top when the plates land.
 
 > Every dimension in this library is **verified against compiled geometry, not asserted** — `scripts/verify.mjs` compiles each interface's fixture with OpenSCAD, measures the result with trimesh, and evaluates every claim in its `spec.json`. Reports land in `reports/`. An assertion that cannot run reports `available: false` with a reason; nothing passes silently.
 
