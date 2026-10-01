@@ -2,7 +2,7 @@
 
 Parametric mating interface definitions for 3D-printed parts — **compiled, measured, assertion-tested** OpenSCAD modules with fit classes and recorded provenance.
 
-Gridfinity, VESA, DIN rail, T-slot, SBC patterns, bearing seats, fastener features: each entry is an importable module whose mating features are typed pegs and sockets cut from a shared nominal, with fit classes and verified dimensions.
+**What this library is actually for.** Modern LLMs already recall the common dimension tables — 2020 extrusion and 608 bearings are among the most-documented numbers in the hobby, and a bare datum is worth approximately nothing. The value here is the two things a model *cannot* do: apply a **measured, printer-specific fit offset** (`asm_socket(d, …, cls)` is where a 4.2 mm nominal becomes a hole that actually passes an M4 bolt on YOUR machine), and be **right about interfaces too obscure to be in training data**. Every claim is verified against compiled geometry, not asserted. The offset table is currently provisional pending gauge prints — the mechanism ships now, the measured numbers land with them.
 
 > Every dimension in this library is **verified against compiled geometry, not asserted** — `scripts/verify.mjs` compiles each interface's fixture with OpenSCAD, measures the result with trimesh, and evaluates every claim in its `spec.json`. Reports land in `reports/`. An assertion that cannot run reports `available: false` with a reason; nothing passes silently.
 
